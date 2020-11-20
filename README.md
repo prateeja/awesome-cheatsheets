@@ -28,6 +28,7 @@ Feel free to take a look. You might learn new things. They have been designed to
 - [C](languages/C.txt)
 - [C#](languages/C%23.txt)
 - [PHP](languages/php.php)
+- [JAVA](languages/java.md)
 
 #### Functional
 
@@ -98,6 +99,7 @@ Feel free to take a look. You might learn new things. They have been designed to
 #### Development
 
 - [cURL](tools/curl.sh)
+- [Drush](tools/drush.sh)
 - [Elasticsearch](tools/elasticsearch.js)
 - [Emmet](tools/emmet.md)
 - [Git](tools/git.sh)
@@ -109,12 +111,14 @@ Feel free to take a look. You might learn new things. They have been designed to
 
 #### Infrastructure
 
+- [AWS CLI](tools/aws.sh)
 - [Docker](tools/docker.sh)
 - [Heroku CLI](tools/heroku.sh)
 - [Kubernetes](tools/kubernetes.md)
 - [Nanobox Boxfile](tools/nanobox_boxfile.yml)
 - [Nanobox CLI](tools/nanobox_cli.sh)
 - [Nginx](tools/nginx.sh)
+- [PM2](tools/pm2.sh)
 - [Ubuntu](tools/ubuntu.sh)
   </details>
 
