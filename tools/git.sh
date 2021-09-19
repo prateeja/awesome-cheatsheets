@@ -1,4 +1,5 @@
 git init            # initiates git in the current directory
+git remote add origin https://github.com/repo_name.git        # add remote reposiory
 git clone <address> # creates a git repo from given address (get the address from your git-server)
 git clone <address> -b <branch_name> <path/to/directory>  # clones a git repo from the address into the given directory and checkout's the given branch
 git clone <address> -b <branch_name> --single-branch  # Clones a single branch
@@ -40,6 +41,7 @@ git grep --heading --line-number '<string/regex>' # Find lines matching the patt
 git log --grep='<string/regex>'                   # Search Commit log
 
 git commit -m "msg"          # commit changes with a msg
+git commit -m "title" -m "description" # commit changes with a title and description
 git commit --amend           # combine staged changes with the previous commit, or edit the previous commit message without changing its snapshot
 git commit --amend --no-edit # amends a commit without changing its commit message
 git commit --amend --author='Author Name <email@address.com>'    # Amend the author of a commit

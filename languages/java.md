@@ -4,9 +4,9 @@
 //Text file name HelloWorld.java
 public class HelloWorld {
   // main() is the method
-  public static void main (String[] arfs)
+  public static void main (String[] args)
     //Prints "Hello World" in the terminal window.
-    System.out.pritn("Hello World");
+    System.out.println("Hello World");
 }
 ```
 
@@ -84,7 +84,7 @@ int c = a + b;
     double cos(double theta) //cosine of theta
     double tan(double theta) //tangent of theta
     double toRadians(double degrees) // convert angle from degrees to radians
-    double toDegreestouble radians)  // convert angle from radians to degrees
+    double toDegrees(double radians)  // convert angle from radians to degrees
     double exp(doube a)  // exponential (e^a)
     double pow(double a, double p) //raise a to the bth power (a^b)
     double random() //random in [0,1)
@@ -196,6 +196,24 @@ int c = a + b;
      System.out.println(i);
   }
 ```
+
+>Enhanced for loop/for-each 
+```java
+for(dataType item : array) {
+    ...
+}
+
+```
+**Example:**
+```java
+    // array of numbers
+    int[] numbers = {100, 200, 300, 400};
+    
+    // for each loop 
+    for (int number: numbers) {
+      System.out.println(number);
+```
+
 > WHILE LOOP STATEMENT
 ```java
     while(condition){  //till condition will be true.

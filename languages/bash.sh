@@ -18,8 +18,9 @@ CTRL+M  # same as RETURN
 CTRL+N  # next line in command history
 CTRL+O  # same as RETURN, then displays next line in history file
 CTRL+P  # previous line in command history
+CTRL+Q  # resumes suspended shell output
 CTRL+R  # searches backward
-CTRL+S  # searches forward
+CTRL+S  # searches forward or suspends shell output
 CTRL+T  # transposes two characters
 CTRL+U  # kills backward from point to the beginning of line
 CTRL+V  # makes the next character typed verbatim
@@ -32,6 +33,19 @@ ALT+B   # moves backward one word
 ALT+D   # deletes next word
 ALT+F   # moves forward one word
 ALT+H   # deletes one character backward
+ALT+T   # transposes two words
+ALT+.   # pastes last word from the last command. Pressing it repeatedly traverses through command history.
+ALT+U   # capitalizes every character from the current cursor position to the end of the word
+ALT+L   # uncapitalizes every character from the current cursor position to the end of the word
+ALT+C   # capitalizes the letter under the cursor. The cursor then moves to the end of the word.
+ALT+R   # reverts any changes to a command you’ve pulled from your history if you’ve edited it.
+ALT+?   # list possible completions to what is typed
+ALT+^   # expand line to most recent match from history
+
+CTRL+X then (   # start recording a keyboard macro
+CTRL+X then )   # finish recording keyboard macro
+CTRL+X then E   # recall last recorded keyboard macro
+CTRL+X then CTRL+E   # invoke text editor (specified by $EDITOR) on current command line then execute resultes as shell commands
 
 BACKSPACE  # deletes one character backward
 DELETE     # deletes one character under cursor
@@ -69,7 +83,11 @@ ls                            # lists your files in current directory, ls <dir> 
 ls -l                         # lists your files in 'long format', which contains the exact size of the file, who owns the file and who has the right to look at it, and when it was last modified
 ls -a                         # lists all files in 'long format', including hidden files (name beginning with '.')
 ln -s <filename> <link>       # creates symbolic link to file
+readlink <filename>           # shows where a symbolic links points to
+tree                          # show directories and subdirectories in easilly readable file tree
+mc                            # terminal file explorer (alternative to ncdu)
 touch <filename>              # creates or updates (edit) your file
+mktemp -t <filename>            # make a temp file in /tmp/ which is deleted at next boot (-d to make directory)
 cat <filename>                # prints file raw content (will not be interpreted)
 any_command > <filename>      # '>' is used to perform redirections, it will set any_command's stdout to file instead of "real stdout" (generally /dev/stdout)
 more <filename>               # shows the first part of a file (move with space and type q to quit)
@@ -84,6 +102,7 @@ diff <filename1> <filename2>  # compares files, and shows where they differ
 wc <filename>                 # tells you how many lines, words and characters there are in a file. Use -lwc (lines, word, character) to ouput only 1 of those informations
 sort <filename>               # sorts the contents of a text file line by line in alphabetical order, use -n for numeric sort and -r for reversing order.
 sort -t -k <filename>         # sorts the contents on specific sort key field starting from 1, using the field separator t.
+rev                           # reverse string characters (hello becomes olleh)
 chmod -options <filename>     # lets you change the read, write, and execute permissions on your files (more infos: SUID, GUID)
 gzip <filename>               # compresses files using gzip algorithm
 gunzip <filename>             # uncompresses files compressed by gzip
@@ -98,6 +117,9 @@ grep -r <pattern> <dir>       # search recursively for pattern in directory
 head -n file_name | tail +n   # Print nth line from file.
 head -y lines.txt | tail +x   # want to display all the lines from x to y. This includes the xth and yth lines.
 
+sed 's/<pattern>/<replacement>/g' <filename> # replace pattern in file with replacement value to std output the character after s (/) is the delimeter 
+sed -i 's/<pattern>/<replacement>/g' <filename> # replace pattern in file with replacement value in place
+echo "this" | sed 's/is/at/g' # replace pattern from input stream with replacement value
 
 ##############################################################################
 # DIRECTORY COMMANDS
@@ -114,6 +136,7 @@ cd <dirname>                  # changes directory
 cp -r <dir1> <dir2>           # copy <dir1> into <dir2> including sub-directories
 pwd                           # tells you where you currently are
 cd ~                          # changes to home.
+cd -                          # changes to previous working directory
 
 ##############################################################################
 # SSH, SYSTEM INFO & NETWORK COMMANDS
@@ -125,6 +148,9 @@ ssh -p <port> user@host  # connects to host on specified port as user
 ssh-copy-id user@host    # adds your ssh key to host for user to enable a keyed or passwordless login
 
 whoami                   # returns your username
+su <user>                # switch to a different user
+su -                     # switch to root, likely needs to be sudo su -
+sudo <command>           # execute command as the root user
 passwd                   # lets you change your password
 quota -v                 # shows what your disk quota is
 date                     # shows the current date and time
@@ -134,6 +160,8 @@ w                        # displays whois online
 finger <user>            # displays information about user
 uname -a                 # shows kernel information
 man <command>            # shows the manual for specified command
+info <command>           # shows another documentation system for the specific command
+help                     # shows documentation about built-in commands and functions
 df                       # shows disk usage
 du <filename>            # shows the disk usage of the files and directories in filename (du -s give only a total)
 last <yourUsername>      # lists your last logins
@@ -152,6 +180,8 @@ dig <domain>             # gets DNS information for domain
 dig -x <host>            # reverses lookup host
 wget <file>              # downloads file
 
+time <command>             # report time consumed by command execution
+
 
 ##############################################################################
 # VARIABLES
@@ -164,7 +194,9 @@ echo $varname                # checks a variable's value
 echo $$                      # prints process ID of the current shell
 echo $!                      # prints process ID of the most recently invoked background job
 echo $?                      # displays the exit status of the last command
-read <varname>               # reads a string from the input and assigns it to a variable 
+read <varname>               # reads a string from the input and assigns it to a variable
+read -p "prompt" <varname>   # same as above but outputs a prompt to ask user for value 
+column -t <filename>         # display info in pretty columns (often used with pipe)
 let <varname> = <equation>   # performs mathematical calculation using operators like +, -, *, /, %
 export VARNAME=value         # defines an environment variable (will be available in subprocesses)
 
@@ -186,6 +218,7 @@ declare -r                   # makes the variables read-only
 declare -x                   # marks the variables for export via the environment
 
 ${varname:-word}             # if varname exists and isn't null, return its value; otherwise return word
+${varname:word}              # if varname exists and isn't null, return its value; otherwise return word
 ${varname:=word}             # if varname exists and isn't null, return its value; otherwise set it word and then return its value
 ${varname:?message}          # if varname exists and isn't null, return its value; otherwise print varname, followed by message and abort the current command or script
 ${varname:+word}             # if varname exists and isn't null, return word; otherwise return null
@@ -356,7 +389,9 @@ n<&m       # file descriptor n is made to be a copy of the input file descriptor
 <&-        # closes the standard input
 >&-        # closes the standard output
 n>&-       # closes the ouput from file descriptor n
-n<&-       # closes the input from file descripor n
+n<&-       # closes the input from file descriptor n
+
+|tee <file># output command to both terminal and a file (-a to append to file)
 
 
 ##############################################################################
@@ -395,6 +430,10 @@ trap - sig1 sig2    # resets the action taken when the signal is received to the
 disown <PID|JID>    # removes the process from the list of jobs
 
 wait                # waits until all background jobs have finished
+sleep <number>      # wait # of seconds before continuing
+
+pv                  # display progress bar for data handling commands. often used with pipe like |pv
+yes                 # give yes response everytime an input is requested from script/process
 
 
 ##############################################################################
@@ -455,7 +494,7 @@ trap returntrap RETURN  # is executed each time a shell function or a script exe
 ##############################################################################
 # COLORS AND BACKGROUNDS 
 ##############################################################################
-
+# note: \e or \x1B also work instead of \033 
 # Reset
 Color_Off='\033[0m' # Text Reset
 
@@ -514,3 +553,4 @@ On_White='\033[47m' # White
 echo -e "${Green}This is GREEN text${Color_Off} and normal text"
 echo -e "${Red}${On_White}This is Red test on White background${Color_Off}" 
 # option -e is mandatory, it enable interpretation of backslash escapes
+printf "${Red} This is red \n"
